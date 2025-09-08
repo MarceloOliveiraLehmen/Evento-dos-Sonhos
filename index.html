@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memórias do Nosso Casamento</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google API -->
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <img src="perfil.jpeg" alt="Foto do Casal" class="couple-photo" />
+    <h1 class="couple-names">Catiúscia & Marcelo</h1>
+  </header>
+
+  <!-- Formulário -->
+  <section class="form-section">
+    <div class="form-container">
+      <h2 class="form-title">Compartilhe suas Memórias</h2>
+      <p class="form-subtitle">Ajude-nos a eternizar momentos especiais do nosso grande dia compartilhando suas fotos e vídeos.</p>
+
+      <div id="authMessage" class="auth-message" style="display:none;">
+        Clique em "Autorizar Google Drive" para começar.
+      </div>
+
+      <form id="uploadForm">
+        <div class="form-group">
+          <label for="guestName" class="form-label">Seu Nome</label>
+          <input type="text" id="guestName" class="form-input" placeholder="Digite seu nome completo" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Fotos e Vídeos</label>
+          <div class="file-upload-area" id="uploadArea">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Clique aqui ou arraste seus arquivos</div>
+            <div class="upload-subtext">Máx. 100MB por arquivo</div>
+            <input type="file" id="fileInput" multiple accept="image/*,video/*" />
+          </div>
+          <div id="fileList" class="file-list"></div>
+        </div>
+
+        <div id="uploadProgress" class="upload-progress"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Enviar lembranças 💌
+        </button>
+
+        <div id="successMessage" class="success-message">
+          Obrigado por compartilhar suas memórias do nosso casamento 💍<br/>
+          Seus arquivos foram enviados com sucesso!
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
