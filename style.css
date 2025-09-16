@@ -1,6 +1,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Georgia', serif; line-height: 1.6; color: #333; background: #fefefe; }
-.header { height: 100vh; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('Cabecalho.jpeg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.header { height: 100vh; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('perfil.jpeg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .couple-photo { width: 300px; height: 300px; border-radius: 50%; border: 5px solid #d4af37; object-fit: cover; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
 .couple-names { font-size: 3rem; color: #fff; font-family: 'Playfair Display', serif; text-shadow: 2px 2px 6px rgba(0,0,0,0.7); }
 .couple-subtitle { color: #d4af37; font-size: 1.2rem; margin-top: 10px; }
