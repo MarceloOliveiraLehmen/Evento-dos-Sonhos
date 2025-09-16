@@ -31,3 +31,18 @@ body { font-family: 'Georgia', serif; line-height: 1.6; color: #333; background:
 .success-message.show { display: block; animation: fadeIn 0.6s ease; }
 .auth-message { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 12px; text-align: center; color: #1565c0; margin-bottom: 15px; }
 @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+@media (max-width: 768px) {
+  .header {
+    justify-content: center;
+  }
+
+  .couple-photo {
+    display: none; /* Esconde a foto de perfil em dispositivos móveis */
+  }
+  
+  .couple-names {
+    font-size: 2.2rem; /* Reduz o tamanho da fonte do nome */
+    line-height: 1.2; /* Ajusta o espaçamento entre as linhas */
+    text-align: center;
+  }
+}
