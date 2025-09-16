@@ -132,7 +132,7 @@ async function handleFileUpload() {
     showFileList();
     document.getElementById("submitBtn").disabled = false;
     progressContainer.innerHTML = "";
-  }, 5000); // 5000ms = 5 segundos
+  }, 2000); // 2000ms = 2 segundos
 }
 
 async function uploadSingleFile(file, guestName, index) {
@@ -195,4 +195,5 @@ async function uploadSingleFile(file, guestName, index) {
     }
   });
 }
+
 
