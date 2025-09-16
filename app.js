@@ -1,6 +1,5 @@
 // ==== CONFIGURAÇÕES ====
 const CLIENT_ID = "900102338405-42mi71ihsrr79b3t87iqebo64878qsrc.apps.googleusercontent.com";
-const CLIENT_ID = "SEU_CLIENT_ID_AQUI"; // ⚠️ SUBSTITUA PELO SEU ID
 const FOLDER_ID = "1Isxbk9nCJFFlRG9T7rT0LfO5M1k-cUs1";
 const DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
 const SCOPES = "https://www.googleapis.com/auth/drive.file";
@@ -209,5 +208,6 @@ async function uploadSingleFile(file, guestName, index) {
     }
   });
 }
+
 
 
