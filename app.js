@@ -8,8 +8,6 @@ const SCOPES = "https://www.googleapis.com/auth/drive.file";
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
-let hasSubmitted = false;
-let guestNameValue = "";
 
 // ==== INICIALIZAÇÃO ====
 window.onload = () => {
@@ -39,35 +37,18 @@ function gisLoaded() {
 
 function checkAndInit() {
   if (gapiInited && gisInited) {
-    updateSigninStatus(false); // Inicia como não autenticado
-  }
-}
-
-function updateSigninStatus(signedIn) {
-  const authMsg = document.getElementById("authMessage");
-  const btn = document.getElementById("submitBtn");
-
-  if (!signedIn) {
-    authMsg.style.display = "block";
-    btn.textContent = "Autorizar Google Drive 🔐";
-  } else {
-    authMsg.style.display = "none";
-    btn.textContent = "Enviar lembranças 💌";
-
-    if (hasSubmitted) {
-      handleFileUpload();
-    }
+    document.getElementById("submitBtn").textContent = "Enviar lembranças 💌";
   }
 }
 
 async function handleAuthResult(resp) {
   if (resp.error) {
-    // Tratamento de erros de autenticação
     console.error("Erro de autenticação:", resp.error);
     alert("Falha ao autorizar. Tente novamente.");
     return;
   }
-  updateSigninStatus(true);
+  
+  handleFileUpload();
 }
 
 // ==== ELEMENTOS ====
@@ -91,12 +72,12 @@ fileInput.addEventListener("change", showFileList);
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  guestNameValue = guestNameInput.value.trim();
-  if (!guestNameValue || fileInput.files.length === 0) {
+  const guestName = guestNameInput.value.trim();
+  if (!guestName || fileInput.files.length === 0) {
     alert("Por favor, preencha seu nome e selecione pelo menos um arquivo.");
     return;
   }
-  hasSubmitted = true;
+  
   tokenClient.requestAccessToken();
 });
 
@@ -113,8 +94,9 @@ function showFileList() {
 
 // ==== UPLOAD DE ARQUIVOS ====
 async function handleFileUpload() {
+  const guestName = guestNameInput.value.trim();
   const files = fileInput.files;
-
+  
   progressContainer.innerHTML = "";
   document.getElementById("submitBtn").disabled = true;
 
@@ -129,10 +111,9 @@ async function handleFileUpload() {
 
   let completed = 0;
 
-  // Executar uploads em paralelo
   await Promise.all(
     Array.from(files).map((file, i) =>
-      uploadSingleFile(file, guestNameValue, i).then(() => {
+      uploadSingleFile(file, guestName, i).then(() => {
         completed++;
         const pct = Math.round((completed / files.length) * 100);
         document.getElementById("overall-bar").style.width = pct + "%";
@@ -143,9 +124,15 @@ async function handleFileUpload() {
 
   // Finalização
   document.getElementById("successMessage").classList.add("show");
-  form.reset();
-  showFileList();
-  document.getElementById("submitBtn").disabled = false;
+
+  // Oculta a mensagem e reseta o formulário após 5 segundos
+  setTimeout(() => {
+    document.getElementById("successMessage").classList.remove("show");
+    form.reset();
+    showFileList();
+    document.getElementById("submitBtn").disabled = false;
+    progressContainer.innerHTML = "";
+  }, 5000); // 5000ms = 5 segundos
 }
 
 async function uploadSingleFile(file, guestName, index) {
@@ -208,6 +195,4 @@ async function uploadSingleFile(file, guestName, index) {
     }
   });
 }
-
-
 
