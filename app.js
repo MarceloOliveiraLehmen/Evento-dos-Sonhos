@@ -35,19 +35,27 @@ function gisLoaded() {
   checkAndInit();
 }
 
+// ==== NOVO CÓDIGO AQUI: O LOGIN SILENCIOSO É TENTADO AQUI ====
 function checkAndInit() {
   if (gapiInited && gisInited) {
-    document.getElementById("submitBtn").textContent = "Enviar lembranças 💌";
+    // Tenta obter um token sem exibir o pop-up
+    tokenClient.requestAccessToken({ prompt: "none" });
   }
 }
 
 async function handleAuthResult(resp) {
   if (resp.error) {
+    // Se o login silencioso falhou, o botão permanece como login.
+    // O usuário precisará clicar nele para iniciar a autenticação.
     console.error("Erro de autenticação:", resp.error);
-    alert("Falha ao autorizar. Tente novamente.");
+    document.getElementById("submitBtn").textContent = "Autorizar Google Drive 🔐";
     return;
   }
   
+  // Se a autenticação foi bem-sucedida, o botão muda
+  document.getElementById("submitBtn").textContent = "Enviar lembranças 💌";
+
+  // E, o upload começa imediatamente
   handleFileUpload();
 }
 
@@ -61,15 +69,16 @@ const progressContainer = document.getElementById("uploadProgress");
 // ==== UPLOAD UX ====
 uploadArea.addEventListener("click", () => fileInput.click());
 uploadArea.addEventListener("dragover", (e) => { e.preventDefault(); uploadArea.classList.add("dragover"); });
-uploadArea.addEventListener("dragleave", () => uploadArea.classList.remove("dragover"));
+uploadArea.addEventListener("dragleave", () => uploadArea.classList.remove("dragleave"));
 uploadArea.addEventListener("drop", (e) => {
   e.preventDefault();
   fileInput.files = e.dataTransfer.files;
   showFileList();
-  uploadArea.classList.remove("dragover");
+  uploadArea.classList.remove("dragleave");
 });
 fileInput.addEventListener("change", showFileList);
 
+// ==== CÓDIGO ALTERADO AQUI: O BOTÃO CHAMA O TOKEN CLIENT DIRETAMENTE ====
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const guestName = guestNameInput.value.trim();
@@ -78,6 +87,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
   
+  // O tokenClient irá lidar com a autenticação (login silencioso ou pop-up)
   tokenClient.requestAccessToken();
 });
 
@@ -195,5 +205,4 @@ async function uploadSingleFile(file, guestName, index) {
     }
   });
 }
-
 
